@@ -1,41 +1,42 @@
 package algocasts
 
-func BucketSort(input []int) {
-	if len(input) == 0 {
+/*
+ 本质上，先根据分桶来先做了一轮排序，然后再在内部做插入排序，
+ 再按遍历桶的顺序把有效的序列置入输入数组中，从而达成排序的目的
+*/
+func bucketSortRewrite(arr []int) {
+	if len(arr) == 0 {
 		return
 	}
 
-	BucketSize := 10
-	min := input[0]
-	max := input[0]
-	for _, val := range input {
-		if val > max {
-			max = val
-		}
-		if val < min {
-			min = val
-		}
+	bucketSize := 5
+
+	maxValue := arr[0]
+	minValue := arr[0]
+
+	for _, item := range arr {
+		maxValue = max(maxValue, item)
+		minValue = min(minValue, item)
 	}
 
-	bucketCount := len(input) / BucketSize
-
+	bucketCount := len(arr) / bucketSize
 	buckets := make([][]int, bucketCount)
 	for i := 0; i < bucketCount; i++ {
-		buckets[i] = make([]int, 0, BucketSize)
+		buckets[i] = make([]int, 0, bucketSize)
 	}
 
-	for _, num := range input {
-		idx := int(((num - min) / (max - min + 1.0) * bucketCount))
-		buckets[idx] = append(buckets[idx], num)
+	for _, item := range arr {
+		// 计算桶的算法，这只是其中一种，还有其他的实现
+		bc := (item - minValue) / (maxValue - minValue + 1.0) * bucketCount
+		buckets[bc] = append(buckets[bc], item)
 	}
 
 	idx := 0
 	for _, bucket := range buckets {
 		insertsort(bucket)
 		for _, num := range bucket {
-			input[idx] = num
-			idx += 1
+			arr[idx] = num
+			idx++
 		}
 	}
-
 }

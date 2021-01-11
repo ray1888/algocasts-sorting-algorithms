@@ -1,8 +1,9 @@
 package algocasts
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func gen100() []int {
@@ -30,7 +31,7 @@ func TestBucketSort(t *testing.T) {
 		{"sort100", genR100(), gen100()},
 	}
 	for _, tt := range tests {
-		BucketSort(tt.input)
+		bucketSortRewrite(tt.input)
 		assert.Equal(t, tt.input, tt.want)
 	}
 }

@@ -43,14 +43,6 @@ func MergeSortRecursive(input []int) {
 	mergeSort(input, 0, len(input)-1, tmp)
 }
 
-func min(a, b int) int {
-	if a > b {
-		return b
-	} else {
-		return a
-	}
-}
-
 func mergerSortIterative(input []int) {
 	if input == nil || len(input) == 0 {
 		return
